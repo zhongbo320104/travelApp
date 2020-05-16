@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:flutter_app/dao/home_dao.dart';
+import 'package:flutter_app/model/common_model.dart';
 import 'package:flutter_app/model/home_model.dart';
+import 'package:flutter_app/navigator/local_nav.dart';
 import 'package:flutter_app/utils/Api.dart';
 import 'package:flutter_app/utils/DiaUtils.dart';
 import "package:flutter_swiper/flutter_swiper.dart";
@@ -27,6 +29,8 @@ class _HomePageState extends State<HomePage> {
   double appBarAlpha = 0;
   // 接收服务端请求过来的数据
   String resultString = "";
+
+  List<CommonModel> localNavList;
 
   // 初始化数据
 
@@ -64,31 +68,22 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  loadData() async{
-    // String url = 'http://www.devio.org/io/flutter_app/json/home_page.json';
-    // Response response;
-    // Dio dio = new Dio();
-    // dio.options.contentType = ContentType.parse('application/x-www-form-urlencoded');
-    // try{
-    //   response = await dio.get(url);
-    //   if(response.statusCode == 200){ 
-    //     setState(() {
-    //       resultString = response.data.toString();
-    //       _imageList = json.decode(resultString);
-    //     });
-    //   }
-    // }catch(err){
+  Future req() async{
+    Response response;
+    Dio dio = new Dio();
+    dio.options.contentType = ContentType.parse('application/x-www-form-urlencoded');
+    response = await dio.get('http://www.devio.org/io/flutter_app/json/home_page.json');
+    return response;
+  }
 
-    // }
-
+  loadData() async{ 
     try{
       HomeModel model = await HomeDao.fetch();
       setState((){
         // resultString = json.encode(model.config);
         // resultString = json.encode(model.gridNav);
         // resultString = json.encode(model.salesBox);
-        resultString = json.encode(model.localNavList);
-
+        localNavList = model.localNavList;
       });
     }catch(err){
 
@@ -99,6 +94,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Container(
        child: Scaffold(
+         backgroundColor: Color(0xfff2f2f2),
          // 移除顶部padding 适配用
          body: Stack(
            children: <Widget>[
@@ -132,6 +128,10 @@ class _HomePageState extends State<HomePage> {
                               },
                               pagination: SwiperPagination(),
                             )
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(7,4,7,4),
+                          child:LocalNav(localNavList:localNavList),
                         ),
                         Container(
                           height: 800,
