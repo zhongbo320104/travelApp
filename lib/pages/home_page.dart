@@ -1,7 +1,17 @@
 import "package:flutter/material.dart";
+import 'package:flutter_app/dao/home_dao.dart';
+import 'package:flutter_app/model/home_model.dart';
+import 'package:flutter_app/utils/Api.dart';
+import 'package:flutter_app/utils/DiaUtils.dart';
 import "package:flutter_swiper/flutter_swiper.dart";
+import "dart:convert";
+
+import "package:dio/dio.dart";
+import "dart:async";
+import "dart:io";
 
 const APPBAR_SCROLL_OFFSET = 80;
+
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -10,11 +20,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List _imageList = [
-    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3320548298,2876777688&fm=26&gp=0.jpg',
-    'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1600080888,3399045086&fm=11&gp=0.jpg',
-    'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1111943471,1325978613&fm=26&gp=0.jpg'
+    { "url":"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3320548298,2876777688&fm=26&gp=0.jpg" },
+    { "url":"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1600080888,3399045086&fm=11&gp=0.jpg" },
+    { "url":"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1111943471,1325978613&fm=26&gp=0.jpg" }
   ];
   double appBarAlpha = 0;
+  // 接收服务端请求过来的数据
+  String resultString = "";
+
+  // 初始化数据
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
   _onScroll(offset){
     double alpha = offset/APPBAR_SCROLL_OFFSET;
     if(alpha < 0){
@@ -26,6 +47,54 @@ class _HomePageState extends State<HomePage> {
      appBarAlpha = alpha; 
     });
   }
+
+  request(url) async {
+    try{
+      Response response;
+      Dio dio = new Dio();
+      dio.options.contentType = ContentType.parse('application/x-www-form-urlencoded');
+      response = await dio.get(url);
+      if(response.statusCode == 200){
+        return response;
+      }else {
+        throw Exception('后端接口异常，请检查测试代码和服务器运行情况');
+      }
+    } catch(e){
+      return print('error ::: ${e}');
+    }
+  }
+
+  loadData() async{
+    // String url = 'http://www.devio.org/io/flutter_app/json/home_page.json';
+    // Response response;
+    // Dio dio = new Dio();
+    // dio.options.contentType = ContentType.parse('application/x-www-form-urlencoded');
+    // try{
+    //   response = await dio.get(url);
+    //   if(response.statusCode == 200){ 
+    //     setState(() {
+    //       resultString = response.data.toString();
+    //       _imageList = json.decode(resultString);
+    //     });
+    //   }
+    // }catch(err){
+
+    // }
+
+    try{
+      HomeModel model = await HomeDao.fetch();
+      setState((){
+        // resultString = json.encode(model.config);
+        // resultString = json.encode(model.gridNav);
+        // resultString = json.encode(model.salesBox);
+        resultString = json.encode(model.localNavList);
+
+      });
+    }catch(err){
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                               autoplay: true,
                               itemBuilder: (BuildContext context,int index){
                                 return Image.network(
-                                  _imageList[index],
+                                  _imageList[index]['url'],
                                   fit:BoxFit.fill,
                                 );
                               },
@@ -67,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           height: 800,
                           child: ListTile(
-                            title: Text('aha'),
+                            title: Text(resultString),
                           ),
                         )
                       ],

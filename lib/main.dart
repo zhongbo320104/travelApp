@@ -4,10 +4,10 @@ import 'package:flutter_app/navigator/tab_navigator.dart';
 
 void main(){
   // 强制竖屏
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown
-  ]);
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown
+  // ]);
   runApp(new MyApp()); 
 }
 

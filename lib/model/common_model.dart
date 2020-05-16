@@ -1,4 +1,4 @@
-
+import 'package:flutter_app/model/common_model.dart';
 // bannerList
 class CommonModel{
   final String icon;
@@ -16,6 +16,16 @@ class CommonModel{
       url:json['url'],
       statusBarColor:json['statusBarColor'],
       hideAppBar:json['hideAppBar'],
-    )
+    );
   }
+  
+  Map<String, dynamic> toJson() {
+      final Map<String, dynamic> data = new Map<String, dynamic>();
+      data['title'] = this.title;
+      data['icon'] = this.icon;
+      data['url'] = this.url;
+      data['statusBarColor'] = this.statusBarColor;
+      data['hideAppBar'] = this.hideAppBar;
+      return data;
+  }  
 }

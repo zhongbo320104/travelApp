@@ -12,7 +12,9 @@ class GridNavModel{
   final GridNavItem travel;
   // 创建构造方法
   GridNavModel({
-    this.icon,this.hotel,this.flight, this.travel 
+      this.hotel,
+      this.flight,
+      this.travel 
     });
 
   factory GridNavModel.fromJson(Map<String,dynamic>json){
@@ -22,6 +24,14 @@ class GridNavModel{
       flight: GridNavItem.fromJson(json['flight']),
       travel: GridNavItem.fromJson(json['travel']),
     ):null;
+  }
+
+   Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['hotel'] = this.hotel;
+    data['flight'] = this.flight;
+    data['travel'] = this.travel;
+    return data;
   }
 }
 
@@ -48,12 +58,34 @@ class GridNavItem{
     return GridNavItem(
       startColor:json['startColor'],
       endColor:json['endColor'],
-      mainItem:json['mainItem'],
+      mainItem:CommonModel.fromJson(json['mainItem']),
       item1: CommonModel.fromJson(json['item1']),
       item2: CommonModel.fromJson(json['item2']),
       item3: CommonModel.fromJson(json['item3']),
       item4: CommonModel.fromJson(json['item4']),
-    )
+    );
+  }   
+
+   Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['startColor'] = this.startColor;
+    data['endColor'] = this.endColor;
+    if (this.mainItem != null) {
+      data['mainItem'] = this.mainItem;
+    }
+    if (this.item1 != null) {
+      data['item1'] = this.item1;
+    }
+    if (this.item2 != null) {
+      data['item2'] = this.item2;
+    }
+    if (this.item3 != null) {
+      data['item3'] = this.item3;
+    }
+    if (this.item4 != null) {
+      data['item4'] = this.item4;
+    }
+    return data;
   }
 }
 
