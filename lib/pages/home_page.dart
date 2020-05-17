@@ -1,10 +1,15 @@
 import "package:flutter/material.dart";
 import 'package:flutter_app/dao/home_dao.dart';
 import 'package:flutter_app/model/common_model.dart';
+import 'package:flutter_app/model/grid_nav_model.dart';
 import 'package:flutter_app/model/home_model.dart';
+import 'package:flutter_app/model/sales_box_model.dart';
+import 'package:flutter_app/widget/grid_nav.dart';
 import 'package:flutter_app/widget/local_nav.dart';
 import 'package:flutter_app/utils/Api.dart';
 import 'package:flutter_app/utils/DiaUtils.dart';
+import 'package:flutter_app/widget/sales_box.dart';
+import 'package:flutter_app/widget/sub_nav.dart';
 import "package:flutter_swiper/flutter_swiper.dart";
 import "dart:convert";
 
@@ -30,7 +35,14 @@ class _HomePageState extends State<HomePage> {
   // 接收服务端请求过来的数据
   String resultString = "";
 
+  List<CommonModel> bannerList;
   List<CommonModel> localNavList;
+
+  List<CommonModel> subList;
+
+  SalesBoxModel salesBoxModel;
+
+  GridNavModel gridNavModel;
 
   // 初始化数据
 
@@ -83,7 +95,11 @@ class _HomePageState extends State<HomePage> {
         // resultString = json.encode(model.config);
         // resultString = json.encode(model.gridNav);
         // resultString = json.encode(model.salesBox);
+        bannerList = model.bannerList;
         localNavList = model.localNavList;
+        gridNavModel = model.gridNav;
+        subList = model.subNavList;
+        salesBoxModel = model.salesBox;
       });
     }catch(err){
 
@@ -133,6 +149,18 @@ class _HomePageState extends State<HomePage> {
                           padding: EdgeInsets.fromLTRB(7,4,7,4),
                           child:LocalNav(localNavList:localNavList),
                         ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(7,0,7,4),
+                          child:GridNav(gridNavModel:gridNavModel),
+                        ), 
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(7,0,7,4),
+                          child:SubNav(subNavList: subList),
+                        ), 
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(7,0,7,4),
+                          child:salesBoxModel!=null?SalesBox(salesBox: salesBoxModel):Text('加载中..'),
+                        ),  
                         Container(
                           height: 800,
                           child: ListTile(
