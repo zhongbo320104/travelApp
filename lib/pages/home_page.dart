@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import 'package:flutter_app/dao/home_dao.dart';
 import 'package:flutter_app/model/common_model.dart';
 import 'package:flutter_app/model/home_model.dart';
-import 'package:flutter_app/navigator/local_nav.dart';
+import 'package:flutter_app/widget/local_nav.dart';
 import 'package:flutter_app/utils/Api.dart';
 import 'package:flutter_app/utils/DiaUtils.dart';
 import "package:flutter_swiper/flutter_swiper.dart";
