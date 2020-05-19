@@ -26,9 +26,9 @@ class _TabNavigatorState extends State<TabNavigator> {
            physics: NeverScrollableScrollPhysics(),
            children: <Widget>[
               HomePage(),
-              MyPage(),
               SearchPage(),
-              TravelPage()
+              TravelPage(),
+              MyPage()
            ],
          ),
          bottomNavigationBar: BottomNavigationBar(
