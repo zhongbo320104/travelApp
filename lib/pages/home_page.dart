@@ -4,6 +4,7 @@ import 'package:flutter_app/model/common_model.dart';
 import 'package:flutter_app/model/grid_nav_model.dart';
 import 'package:flutter_app/model/home_model.dart';
 import 'package:flutter_app/model/sales_box_model.dart';
+import 'package:flutter_app/pages/search_page.dart';
 import 'package:flutter_app/widget/grid_nav.dart';
 import 'package:flutter_app/widget/local_nav.dart';
 import 'package:flutter_app/widget/sales_box.dart';
@@ -255,7 +256,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   _jumpToSearch(){
-
+    Navigator.push(context, 
+      MaterialPageRoute(
+        builder: (context) => SearchPage(hint:SEARCH_BAR_DEFAULT_TEXT,hideLeft: false,),
+      )
+    );
   }
   _jumpToSpeak(){
 
