@@ -27,7 +27,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin{
   // List _imageList = [
   //   { "url":"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3320548298,2876777688&fm=26&gp=0.jpg" },
   //   { "url":"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1600080888,3399045086&fm=11&gp=0.jpg" },
@@ -55,6 +55,9 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _handleRefesh();
   }
+
+  @override
+  bool get wantKeepAlive => true;  // 会带来内存的消耗 适当使用
 
   _onScroll(offset){
     double alpha = offset/APPBAR_SCROLL_OFFSET;

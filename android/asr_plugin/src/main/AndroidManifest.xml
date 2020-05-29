@@ -1,0 +1,20 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.devio.flutter.plugin.asr" >
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <application>
+        <service android:name="com.baidu.speech.VoiceRecognitionService"
+            android:exported="false"></service>
+        <meta-data android:name="com.baidu.speech.APP_ID"
+                    android:value="20088672"></meta-data>
+        <meta-data android:name="com.baidu.speech.APP_KEY"
+            android:value="ywf55mGNI2rTHrhqFGoqvfbv"></meta-data>
+        <meta-data android:name="com.baidu.speech.SECRET_KEY"
+            android:value="YQ7fTwPd9Dbg9wcoQP9luu9P4F4FyOKu"></meta-data>
+    </application>
+</manifest>
